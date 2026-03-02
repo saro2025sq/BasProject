@@ -2,30 +2,54 @@
 
 Bu paket, Windows 10 terminalinde çalışacak OpenCode AI aracının tam kurulum dosyalarını içerir.
 
-## İçindekiler
+## 📥 İndirme
+
+### Release Dosyaları (GitHub)
+
+| Dosya | Açıklama | İndirme Linki |
+|-------|----------|---------------|
+| `opencode.exe` | Windows x64 (Modern CPU) | [İndir](https://github.com/saro2025sq/BasProject/releases/download/v1.2.15/opencode.exe) |
+| `opencode-baseline.exe` | Windows x64 (Eski CPU) | [İndir](https://github.com/saro2025sq/BasProject/releases/download/v1.2.15-baseline/opencode-baseline.exe) |
+
+## 📁 Paket İçeriği
 
 ```
-opencode-ai-package/
+BasProject/
 ├── install-opencode-windows.ps1    # PowerShell kurulum betiği (önerilen)
 ├── install-opencode-windows.bat    # CMD kurulum betiği (alternatif)
-├── platform-binaries/              # Platform binary dosyaları
-│   ├── windows-x64/                # Windows 64-bit binary
-│   │   └── bin/opencode.exe        # Ana çalıştırılabilir dosya
-│   └── windows-x64-baseline/       # Eski CPU'lar için binary
 ├── package/                        # npm paketi kaynak dosyaları
 ├── github-repo/                    # GitHub kaynak kodu
 └── README-TR.md                    # Bu dosya
+
+📁 Releases (GitHub):
+├── v1.2.15/opencode.exe            # Windows x64 (Modern CPU - AVX destekli)
+└── v1.2.15-baseline/opencode-baseline.exe  # Windows x64 (Eski CPU - SSE2)
 ```
 
-## Gereksinimler
+## ⚙️ Gereksinimler
 
 - **Windows 10** (64-bit)
-- **Node.js 18+** (npm ile birlikte)
 - **PowerShell 5.1+** veya **CMD**
+- Node.js isteğe bağlı (bazı özellikler için)
 
-## Hızlı Kurulum
+## 🚀 Hızlı Kurulum
 
-### Yöntem 1: PowerShell (Önerilen)
+### Yöntem 1: Doğrudan İndirme (En Kolay)
+
+```powershell
+# PowerShell'de çalıştırın
+# Binary'yi indirin
+Invoke-WebRequest -Uri "https://github.com/saro2025sq/BasProject/releases/download/v1.2.15/opencode.exe" -OutFile "opencode.exe"
+
+# İstenen klasöre taşıyın
+New-Item -ItemType Directory -Force -Path "$env:LOCALAPPDATA\opencode-ai"
+Move-Item opencode.exe "$env:LOCALAPPDATA\opencode-ai\"
+
+# PATH'e ekleyin
+[Environment]::SetEnvironmentVariable("PATH", $env:PATH + ";$env:LOCALAPPDATA\opencode-ai", "User")
+```
+
+### Yöntem 2: PowerShell Kurulum Betiği
 
 1. PowerShell'i **Yönetici olarak çalıştırın**
 2. Bu klasöre gidin
@@ -36,7 +60,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\install-opencode-windows.ps1
 ```
 
-### Yöntem 2: CMD (Batch)
+### Yöntem 3: CMD (Batch)
 
 1. CMD'yi **Yönetici olarak çalıştırın**
 2. Bu klasöre gidin
@@ -46,17 +70,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 install-opencode-windows.bat
 ```
 
-### Yöntem 3: Manuel Kurulum
-
-```powershell
-# Binary'yi kopyala
-Copy-Item ".\platform-binaries\windows-x64\bin\opencode.exe" "C:\Tools\opencode.exe"
-
-# PATH'e ekle (PowerShell)
-[Environment]::SetEnvironmentVariable("PATH", $env:PATH + ";C:\Tools", "User")
-```
-
-## API Anahtarı Yapılandırması
+## 🔑 API Anahtarı Yapılandırması
 
 OpenCode'u kullanmak için en az bir AI sağlayıcısının API anahtarına ihtiyacınız var:
 
@@ -116,7 +130,7 @@ setx ANTHROPIC_API_KEY "your-key"
 }
 ```
 
-## Desteklenen AI Modelleri
+## 🤖 Desteklenen AI Modelleri
 
 ### Anthropic (Claude)
 - Claude 4 Sonnet
@@ -141,7 +155,7 @@ setx ANTHROPIC_API_KEY "your-key"
 - Azure OpenAI
 - OpenRouter
 
-## Kullanım
+## 📖 Kullanım
 
 ```powershell
 # OpenCode'u başlat
@@ -157,7 +171,7 @@ opencode -d
 opencode -c C:\projelerim\uygulama
 ```
 
-## Klavye Kısayolları
+## ⌨️ Klavye Kısayolları
 
 | Kısayol | Aksiyon |
 |---------|---------|
@@ -169,7 +183,7 @@ opencode -c C:\projelerim\uygulama
 | `i` | Editör modu |
 | `?` | Yardım |
 
-## Sorun Giderme
+## 🔧 Sorun Giderme
 
 ### "opencode" komutu bulunamadı
 
@@ -177,7 +191,7 @@ opencode -c C:\projelerim\uygulama
 2. PATH'i kontrol edin: `$env:PATH`
 3. Manuel olarak ekleyin:
    ```powershell
-   $env:PATH += ";$env:LOCALAPPDATA\opencode-ai\bin"
+   $env:PATH += ";$env:LOCALAPPDATA\opencode-ai"
    ```
 
 ### API Hatası
@@ -188,24 +202,29 @@ opencode -c C:\projelerim\uygulama
 
 ### Eski CPU'lar İçin
 
-Eğer `opencode.exe` çalışmıyorsa, baseline versiyonunu kullanın:
+Eğer standart `opencode.exe` çalışmıyorsa, **baseline** versiyonunu kullanın:
 
 ```powershell
-Copy-Item ".\platform-binaries\windows-x64-baseline\bin\opencode.exe" "$env:LOCALAPPDATA\opencode-ai\bin\opencode.exe"
+# Baseline versiyonunu indirin
+Invoke-WebRequest -Uri "https://github.com/saro2025sq/BasProject/releases/download/v1.2.15-baseline/opencode-baseline.exe" -OutFile "opencode.exe"
 ```
 
-## Ek Kaynaklar
+**Baseline vs Standart:**
+- **Standart**: AVX komut seti destekli modern CPU'lar
+- **Baseline**: SSE2 destekli tüm x64 CPU'lar (eski sistemler için)
+
+## 📚 Ek Kaynaklar
 
 - **Resmi Site:** https://opencode.ai
 - **GitHub:** https://github.com/opencode-ai/opencode
 - **Dokümantasyon:** https://opencode.ai/docs
 
-## Sürüm Bilgisi
+## 📌 Sürüm Bilgisi
 
 - **Paket:** opencode-ai v1.2.15
 - **Windows Binary:** opencode-windows-x64 v1.2.15
 
-## Lisans
+## 📄 Lisans
 
 MIT License - Detaylar için LICENSE dosyasına bakın.
 
