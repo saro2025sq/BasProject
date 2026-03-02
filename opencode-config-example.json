@@ -1,3 +1,56 @@
+# OpenCode AI - Örnek Konfigürasyon
+
+Bu dosya `~/.opencode.json` (veya Windows'ta `%USERPROFILE%\.opencode.json`) konumuna kopyalanmalıdır.
+
+## Temel Konfigürasyon
+
+```json
+{
+  "data": {
+    "directory": ".opencode"
+  },
+  "providers": {
+    "anthropic": {
+      "apiKey": "",
+      "disabled": false
+    },
+    "openai": {
+      "apiKey": "",
+      "disabled": false
+    },
+    "gemini": {
+      "apiKey": "",
+      "disabled": false
+    }
+  },
+  "agents": {
+    "coder": {
+      "model": "claude-3.7-sonnet",
+      "maxTokens": 5000
+    },
+    "task": {
+      "model": "claude-3.7-sonnet",
+      "maxTokens": 5000
+    },
+    "title": {
+      "model": "gpt-4o-mini",
+      "maxTokens": 80
+    }
+  },
+  "shell": {
+    "path": "C:\\Windows\\System32\\cmd.exe",
+    "args": ["/c"]
+  },
+  "tui": {
+    "theme": "opencode"
+  },
+  "autoCompact": true
+}
+```
+
+## Tüm Seçenekler
+
+```json
 {
   "data": {
     "directory": ".opencode"
@@ -22,12 +75,21 @@
     "copilot": {
       "apiKey": "",
       "disabled": false
+    },
+    "openrouter": {
+      "apiKey": "",
+      "disabled": false
+    },
+    "azure": {
+      "apiKey": "",
+      "disabled": false
     }
   },
   "agents": {
     "coder": {
       "model": "claude-3.7-sonnet",
-      "maxTokens": 5000
+      "maxTokens": 5000,
+      "reasoningEffort": "medium"
     },
     "task": {
       "model": "claude-3.7-sonnet",
@@ -36,6 +98,10 @@
     "title": {
       "model": "gpt-4o-mini",
       "maxTokens": 80
+    },
+    "summarizer": {
+      "model": "claude-3.7-sonnet",
+      "maxTokens": 2000
     }
   },
   "lsp": {
@@ -64,14 +130,122 @@
   "tui": {
     "theme": "opencode"
   },
-  "debug": false,
-  "debugLSP": false,
-  "autoCompact": true,
+  "mcpServers": {
+    "filesystem": {
+      "type": "stdio",
+      "command": "mcp-filesystem",
+      "args": ["--root", "."]
+    }
+  },
   "contextPaths": [
     ".github/copilot-instructions.md",
     ".cursorrules",
     "CLAUDE.md",
-    "opencode.md",
-    "OpenCode.md"
-  ]
+    "opencode.md"
+  ],
+  "debug": false,
+  "debugLSP": false,
+  "autoCompact": true
 }
+```
+
+## Temalar
+
+| Tema | Açıklama |
+|------|----------|
+| `opencode` | Varsayılan tema |
+| `catppuccin` | Pastel renkler |
+| `dracula` | Karanlık tema |
+| `gruvbox` | Retro tema |
+| `monokai` | Klasik tema |
+| `tokyonight` | Neon tema |
+| `tron` | Cyberpunk tema |
+
+## Modeller
+
+### Anthropic (Claude)
+| Model | Açıklama | Context |
+|-------|----------|---------|
+| `claude-4-sonnet` | En yeni | 200K |
+| `claude-4-opus` | En güçlü | 200K |
+| `claude-3.7-sonnet` | Dengeli | 200K |
+| `claude-3.5-sonnet` | Hızlı | 200K |
+| `claude-3.5-haiku` | En hızlı | 200K |
+
+### OpenAI (GPT)
+| Model | Açıklama | Context |
+|-------|----------|---------|
+| `gpt-4.1` | En yeni | 1M |
+| `gpt-4.1-mini` | Hafif | 1M |
+| `gpt-4o` | Dengeli | 128K |
+| `gpt-4o-mini` | Hızlı | 128K |
+| `o1` | Reasoning | 200K |
+| `o3-mini` | Hızlı reasoning | 200K |
+
+### Google (Gemini)
+| Model | Açıklama | Context |
+|-------|----------|---------|
+| `gemini-2.5-pro` | En güçlü | 1M |
+| `gemini-2.5-flash` | Hızlı | 1M |
+| `gemini-2.0-flash` | Dengeli | 1M |
+
+### Groq
+| Model | Açıklama |
+|-------|----------|
+| `llama-4-maverick` | Meta Llama 4 |
+| `llama-4-scout` | Hafif |
+| `qwq-32b` | Qwen Reasoning |
+
+---
+
+## Windows Shell Seçenekleri
+
+### CMD
+```json
+{
+  "shell": {
+    "path": "C:\\Windows\\System32\\cmd.exe",
+    "args": ["/c"]
+  }
+}
+```
+
+### PowerShell
+```json
+{
+  "shell": {
+    "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "args": ["-NoProfile", "-Command"]
+  }
+}
+```
+
+### PowerShell 7+
+```json
+{
+  "shell": {
+    "path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+    "args": ["-NoProfile", "-Command"]
+  }
+}
+```
+
+### Git Bash
+```json
+{
+  "shell": {
+    "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "args": ["-l", "-c"]
+  }
+}
+```
+
+### WSL
+```json
+{
+  "shell": {
+    "path": "wsl.exe",
+    "args": ["-e", "bash", "-l", "-c"]
+  }
+}
+```
